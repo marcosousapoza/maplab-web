@@ -25,11 +25,9 @@ jobs:
       - name: Build and publish
         run: |
           version=${GITHUB_REF_NAME#v}
-          wasm_version=$(cat WASM_VERSION)
           image=ghcr.io/marcosousapoza/maplab-web:$version
           DOCKER_BUILDKIT=1 docker build \
             --file Containerfile \
             --build-arg VERSION="$version" \
-            --build-arg WASM_VERSION="$wasm_version" \
             --tag "$image" .
           docker push "$image"

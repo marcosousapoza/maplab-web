@@ -27,22 +27,17 @@ The tag workflow rejects a tag that does not match `package.json`.
 
 ## WASM Package Versions
 
-Production builds pin `@marcosousapoza/maplab-wasm` through `WASM_VERSION` and
+Production builds pin `@marcosousapoza/maplab-wasm` exactly in `package.json` and
 install the public package from npmjs without registry credentials:
 
 ```bash
-npm install --no-save @marcosousapoza/maplab-wasm@X.Y.Z
-npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm
+npm install --save-exact @marcosousapoza/maplab-wasm@X.Y.Z
 ```
 
-For unpublished local development, build the adjacent Rust repository and run:
-
-```bash
-npm run wasm:sync -- ../maplab-wasm/pkg
-```
-
-The generated package is copied into `src/lib/wasm` before Vite builds. Vite emits
-the `.wasm` binary as a hashed static asset served by the web container.
+The application imports the package directly. Vite emits its `.wasm` binary as a
+hashed static asset served by the web container. The WASM repository's
+`publish-package.yml` workflow publishes tagged versions through npm trusted
+publishing without a token.
 
 Version tags publish `ghcr.io/marcosousapoza/maplab-web:X.Y.Z`. The runtime image
 contains the bundled WASM asset but no npm credentials, Node.js, or build tools.

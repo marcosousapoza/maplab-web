@@ -4,6 +4,3 @@ coverage/
 playwright-report/
 test-results/
 .env
-src/lib/wasm/*.js
-src/lib/wasm/*.wasm
-src/lib/wasm/package.json

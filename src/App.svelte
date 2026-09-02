@@ -17,11 +17,11 @@
   let loading = true;
   let error = '';
   let wasmReady = false;
-  let calculateDistance: typeof import('./lib/wasm/maplab_wasm.js').haversine_distance_km;
+  let calculateDistance: typeof import('@marcosousapoza/maplab-wasm').haversine_distance_km;
 
   onMount(async () => {
     try {
-      const wasm = await import('./lib/wasm/maplab_wasm.js');
+      const wasm = await import('@marcosousapoza/maplab-wasm');
       await wasm.default();
       calculateDistance = wasm.haversine_distance_km;
       wasmReady = true;

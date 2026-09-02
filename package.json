@@ -9,10 +9,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test": "vitest run",
-    "wasm:sync": "node scripts/sync-wasm.js"
+    "test": "vitest run"
   },
   "dependencies": {
+    "@marcosousapoza/maplab-wasm": "0.1.4",
     "leaflet": "^1.9.4",
     "svelte": "^5.0.0",
     "svelte-map-leaflet": "^0.5.0"

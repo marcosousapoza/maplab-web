@@ -18,9 +18,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - name: Install WASM package
-        run: npm install --no-save --package-lock=false "@marcosousapoza/maplab-wasm@$(cat WASM_VERSION)"
-      - run: npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm
       - run: npm run check
       - run: npm test
       - run: npm run build
