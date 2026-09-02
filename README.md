@@ -39,3 +39,9 @@ that the Rust WASM module is ready, and all verification commands pass.
 `svelte-map-leaflet` is a Svelte 3-era package. This environment uses current
 Svelte compatibility mode and verifies the production build in CI. Replace or pin
 Svelte only through an issue if a future release breaks that verified contract.
+
+## Versioning
+
+See [VERSIONING.md](VERSIONING.md). Use
+`./scripts/bump-version.sh patch|minor|major`. The same guide documents consuming
+`@marcosousapoza/maplab-wasm` from GitHub Packages or an adjacent source build.
