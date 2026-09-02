@@ -5,28 +5,27 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/checkout@v5
-        with:
-          repository: marcosousapoza/maplab-wasm
-          path: maplab-wasm
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: wasm-pack@0.15.0
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-      - run: wasm-pack build maplab-wasm --target web --out-dir pkg
+          registry-url: https://npm.pkg.github.com
+          scope: "@marcosousapoza"
       - run: npm ci
-      - run: npm run wasm:sync -- maplab-wasm/pkg
+      - name: Install WASM package
+        run: npm install --no-save --package-lock=false "@marcosousapoza/maplab-wasm@$(cat WASM_VERSION)"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm
       - run: npm run check
       - run: npm test
       - run: npm run build

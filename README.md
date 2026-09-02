@@ -12,7 +12,7 @@ Client-only Svelte and Vite application using OpenStreetMap through
 
 ## Run
 
-From an adjacent clone of `maplab-wasm`:
+For local source development with an adjacent clone of `maplab-wasm`:
 
 ```bash
 npm ci
@@ -45,3 +45,4 @@ Svelte only through an issue if a future release breaks that verified contract.
 See [VERSIONING.md](VERSIONING.md). Use
 `./scripts/bump-version.sh patch|minor|major`. The same guide documents consuming
 `@marcosousapoza/maplab-wasm` from GitHub Packages or an adjacent source build.
+Production image builds use the package version pinned in `WASM_VERSION`.

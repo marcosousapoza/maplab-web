@@ -1,0 +1,37 @@
+name: Publish Runtime Image
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Validate tag
+        run: test "$GITHUB_REF_NAME" = "v$(node --print "require('./package.json').version")"
+      - name: Sign in to GHCR
+        run: echo "$GITHUB_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and publish
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          wasm_version=$(cat WASM_VERSION)
+          image=ghcr.io/marcosousapoza/maplab-web:$version
+          DOCKER_BUILDKIT=1 docker build \
+            --secret id=npm_token,env=GITHUB_TOKEN \
+            --build-arg VERSION="$version" \
+            --build-arg WASM_VERSION="$wasm_version" \
+            --tag "$image" .
+          docker push "$image"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
