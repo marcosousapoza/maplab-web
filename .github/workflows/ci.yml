@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  packages: read
 
 jobs:
   verify:
@@ -18,13 +17,9 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          registry-url: https://npm.pkg.github.com
-          scope: "@marcosousapoza"
       - run: npm ci
       - name: Install WASM package
         run: npm install --no-save --package-lock=false "@marcosousapoza/maplab-wasm@$(cat WASM_VERSION)"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm
       - run: npm run check
       - run: npm test

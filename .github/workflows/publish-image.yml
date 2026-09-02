@@ -29,10 +29,7 @@ jobs:
           image=ghcr.io/marcosousapoza/maplab-web:$version
           DOCKER_BUILDKIT=1 docker build \
             --file Containerfile \
-            --secret id=npm_token,env=GITHUB_TOKEN \
             --build-arg VERSION="$version" \
             --build-arg WASM_VERSION="$wasm_version" \
             --tag "$image" .
           docker push "$image"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

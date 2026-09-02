@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7
 FROM docker.io/library/node:24.19-bookworm-slim AS builder
 
 ARG VERSION=0.0.0
@@ -8,11 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN --mount=type=secret,id=npm_token,required=true \
-    token=$(cat /run/secrets/npm_token) \
-    && printf '@marcosousapoza:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=%s\n' "$token" > /tmp/npmrc \
-    && npm --userconfig=/tmp/npmrc install --no-save --package-lock=false "@marcosousapoza/maplab-wasm@${WASM_VERSION}" \
-    && rm /tmp/npmrc \
+RUN npm install --no-save --package-lock=false "@marcosousapoza/maplab-wasm@${WASM_VERSION}" \
     && npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm \
     && npm run build
 

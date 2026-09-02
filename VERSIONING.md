@@ -28,12 +28,10 @@ The tag workflow rejects a tag that does not match `package.json`.
 ## WASM Package Versions
 
 Production builds pin `@marcosousapoza/maplab-wasm` through `WASM_VERSION` and
-install it from GitHub Packages using an ephemeral build secret.
-Copy `.npmrc.github.example` to `.npmrc` and provide `NODE_AUTH_TOKEN`:
+install the public package from npmjs without registry credentials:
 
 ```bash
-NODE_AUTH_TOKEN="$(gh auth token)" \
-  npm install --no-save @marcosousapoza/maplab-wasm@X.Y.Z
+npm install --no-save @marcosousapoza/maplab-wasm@X.Y.Z
 npm run wasm:sync -- node_modules/@marcosousapoza/maplab-wasm
 ```
 

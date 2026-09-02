@@ -44,5 +44,5 @@ Svelte only through an issue if a future release breaks that verified contract.
 
 See [VERSIONING.md](VERSIONING.md). Use
 `./scripts/bump-version.sh patch|minor|major`. The same guide documents consuming
-`@marcosousapoza/maplab-wasm` from GitHub Packages or an adjacent source build.
+`@marcosousapoza/maplab-wasm` from npmjs or an adjacent source build.
 Production image builds use the package version pinned in `WASM_VERSION`.
