@@ -28,6 +28,7 @@ jobs:
           wasm_version=$(cat WASM_VERSION)
           image=ghcr.io/marcosousapoza/maplab-web:$version
           DOCKER_BUILDKIT=1 docker build \
+            --file Containerfile \
             --secret id=npm_token,env=GITHUB_TOKEN \
             --build-arg VERSION="$version" \
             --build-arg WASM_VERSION="$wasm_version" \
